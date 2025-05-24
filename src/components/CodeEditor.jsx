@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const CodeEditor = ({ code, setCode, isDarkMode }) => {
+const CodeEditor = ({ code, setCode, isDarkMode, setOutput, setStatus }) => {
   const textareaRef = useRef(null);
 
   // Handle tab key in textarea
@@ -24,24 +24,31 @@ const CodeEditor = ({ code, setCode, isDarkMode }) => {
       }, 0);
     }
   };
-  // Add this inside the component
-useEffect(() => {
-  const timeoutId = setTimeout(() => {
-    fetch('http://localhost:5000/run-code', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ code }),
-    })
-      .then((res) => res.text())
-      .then((msg) => console.log(msg))
-      .catch((err) => console.error('Error saving code:', err));
-  }, 1000); // debounce save after 1s of inactivity
 
-  return () => clearTimeout(timeoutId);
-}, [code]);
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setStatus('compiling');
+      fetch('http://localhost:5000/run-code', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ code }),
+      })
+        .then((res) => res.text())
+        .then((msg) => {
+          setOutput(msg);
+          setStatus('success');
+        })
+        .catch((err) => {
+          console.error('Error saving code:', err);
+          setOutput(err.message);
+          setStatus('error');
+        });
+    }, 1000); // debounce save after 1s of inactivity
 
+    return () => clearTimeout(timeoutId);
+  }, [code, setOutput, setStatus]);
 
   // Auto-adjust height
   useEffect(() => {
@@ -84,7 +91,9 @@ useEffect(() => {
 CodeEditor.propTypes = {
   code: PropTypes.string.isRequired,
   setCode: PropTypes.func.isRequired,
-  isDarkMode: PropTypes.bool.isRequired
+  isDarkMode: PropTypes.bool.isRequired,
+  setOutput: PropTypes.func.isRequired,
+  setStatus: PropTypes.func.isRequired
 };
 
 export default CodeEditor;
