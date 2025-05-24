@@ -14,6 +14,9 @@ const PORT = 5000;
 app.use(cors());
 app.use(express.json());
 
+// Serve static files from the dist directory
+app.use(express.static(path.join(__dirname, '../../dist')));
+
 app.post('/run-code', (req, res) => {
   const { code } = req.body;
 
@@ -42,7 +45,11 @@ app.post('/run-code', (req, res) => {
   });
 });
 
-// ✅ This line is required to start the server
+// Catch-all handler to serve index.html for all routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../dist/index.html'));
+});
+
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
