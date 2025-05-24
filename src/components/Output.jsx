@@ -64,4 +64,4 @@ Output.propTypes = {
   isDarkMode: PropTypes.bool.isRequired
 };
 
-export default Output;
+export default Output; 
