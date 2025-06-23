@@ -57,3 +57,11 @@ pre, code, textarea.font-mono {
 .bg-gray-900 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.3);
 }
+.code-editor-container {
+  position: relative;
+}
+
+.code-editor-container textarea {
+  overflow-y: auto;
+  line-height: 1.5;
+}

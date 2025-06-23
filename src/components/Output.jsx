@@ -51,7 +51,7 @@ const Output = ({ output, status, isDarkMode }) => {
         } ${
           status === 'error' ? (isDarkMode ? 'border-red-700' : 'border-red-300') : ''
         } border`}>
-          {output || 'No output yet. Click "Compile & Run" to see the results.'}
+          {output || 'Compiled Successfully.'}
         </pre>
       </div>
     </div>
@@ -64,4 +64,4 @@ Output.propTypes = {
   isDarkMode: PropTypes.bool.isRequired
 };
 
-export default Output;
+export default Output; 

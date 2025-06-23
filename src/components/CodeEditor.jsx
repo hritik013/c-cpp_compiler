@@ -67,16 +67,7 @@ useEffect(() => {
         spellCheck={false}
         aria-label="Code editor"
       />
-      <style jsx>{`
-        .code-editor-container {
-          position: relative;
-        }
-        textarea {
-          min-height: 300px;
-          overflow-y: auto;
-          line-height: 1.5;
-        }
-      `}</style>
+      
     </div>
   );
 };

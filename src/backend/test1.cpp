@@ -1,5 +1,7 @@
-int main(){
-int a=5;
-int b=10;
-int c=a+b;
+// Enter your C++ code here
+#include <iostream>
+
+int main() {
+  std::cout << "Hello, World!" << std::endl;
+  return 0;
 }
